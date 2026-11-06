@@ -1,0 +1,11 @@
+{
+  "appId": "br.com.bellanapoli.app",
+  "appName": "Pizzaria Bella Napoli",
+  "webDir": "dist",
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_icon_config_sample",
+      "iconColor": "#dc2626"
+    }
+  }
+}
