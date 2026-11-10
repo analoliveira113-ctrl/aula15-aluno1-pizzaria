@@ -1,4 +1,6 @@
+
 name: Construir APK Android (Capacitor)
+
 on:
   push:
     branches:
@@ -12,36 +14,40 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Clonar Repositório
+      - name: Clonar Repositório
         uses: actions/checkout@v4
 
-      - name: 🟢 Configurar Node.js
+      - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
 
-      - name: 📦 Instalar Dependências
-        run: npm install
+      - name: Instalar Dependências
+        run: npm ci
 
-      - name: ☕ Configurar Java JDK 21
+      - name: Construir Aplicativo React
+        run: npm run build
+
+      - name: Configurar Java JDK 21
         uses: actions/setup-java@v4
         with:
-          distribution: 'temurin'
+          distribution: temurin
           java-version: '21'
 
-      - name: 🔄 Sincronizar Capacitor com Android
-        run: npx cap sync android
+      - name: Sincronizar Capacitor com Android
+        run: node ./node_modules/@capacitor/cli/bin/capacitor sync android
 
-      - name: 🔑 Permissão de Execução do Gradle
+      - name: Permissão de Execução do Gradle
         run: chmod +x android/gradlew
 
-      - name: 🔨 Compilar APK com Gradle
+      - name: Compilar APK com Gradle
         run: |
           cd android
           ./gradlew assembleDebug
 
-      - name: 📤 Publicar APK para Download
+      - name: Publicar APK para Download
         uses: actions/upload-artifact@v4
         with:
           name: bella-napoli-apk
           path: android/app/build/outputs/apk/debug/app-debug.apk
+
